@@ -83,10 +83,10 @@ public:
 	const T& operator[](int i) const { return this->at(i); }
 };
 
-Vec<Entry>    phone_book(10);
-vector<Entry> phone_book_vec;
-list<Entry>   phone_book_lst;
-
+Vec<Entry>       phone_book(10);
+vector<Entry>    phone_book_vec;
+list<Entry>      phone_book_lst;
+map<string, int> phone_book_map;
 /*
 void print_entry(list<Entry>& lst)
 {
@@ -104,7 +104,7 @@ template <class C> void print(const C& t, ostream& s = cout)
 	copy(t.begin(), t.end(), ostream_iterator<typename C::value_type>(s, "\n"));
 }
 //*/
-map<string, int> phone_book_map;
+
 
 //测试函数 begin
 void test_map();
