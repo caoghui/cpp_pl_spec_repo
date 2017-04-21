@@ -31,6 +31,34 @@ template<class C> typename C::value_type sum(const C& c)
 	return s;
 }
 
+template<class In> typename iterator_traits<In>::difference_type dist_helper(In first, In last, input_iterator_tag)
+{
+	typename iterator_traits<In>::difference_type d = 0;
+	while(first++ != last )
+		d++;
+	return d;
+}
+
+template<class Ran> typename iterator_traits<Ran>::difference_type dist_helper(Ran first, Ran last, random_access_iterator_tag)
+{
+	return last - first;
+}
+
+template<class In> typename iterator_traits<In>::difference_type distance(In first, In last)
+{
+	return dist_helper(first, last, iterator_traits<In>::iterator_category());
+}
+
+template<class In, class T> typename iterator_traits<In>::difference_type count(In first, In last, const T& val)
+{
+	typename iterator_traits<In>::difference_type res = 0;
+	while(first != last)
+	{
+		if(*first++ == val)
+			++res;
+	}
+	return res;
+}
 class Nocase  //不区分大小写的比较
 {
 public:
