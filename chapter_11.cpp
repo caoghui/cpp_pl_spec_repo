@@ -18,7 +18,6 @@ class complex
 public:
     //构造函数
 	complex(double r = 0, double i = 0) : re(r), im(i) { }
-	complex(double r) : re(r), im(0) { }
 	
 	//复制构造函数
 	complex(const complex& c) : re(c.re), im(c.im) { }
@@ -58,7 +57,8 @@ ostream& operator<<(ostream&, complex);
 //主函数
 int main(int argc, char** argv)
 {
-	complex b = double(3);
+	complex b = 3;
+	
 	cout<<b<<endl;
 	return 0;
 }
