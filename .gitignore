@@ -1,4 +1,6 @@
 test
+copy_control
 chapter_*
 test.d*
+*.dSYM
 .~*

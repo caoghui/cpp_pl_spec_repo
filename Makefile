@@ -8,7 +8,8 @@ INCLUDES=
 #INCLUDES=-I$(ACE_ROOT)
 
 SOURCES=$(wildcard *.cpp)
-TARGETS=$(patsubst %.cpp, %,$(SOURCES))
+TARGETS=$(filter-out chapter_3, $(patsubst %.cpp, %,$(SOURCES)))
+
 quiet-command = $(if $(v),$1,$(if $(2),@echo $2 && $1, @$1))
 
 .PHONY:all clean
@@ -19,3 +20,4 @@ all:$(TARGETS)
 
 clean:
 	@rm -f $(TARGETS)
+	@rm -rf *.dSYM
