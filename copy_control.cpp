@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstdio>
 #include <string>
+#include <bitset>
 using namespace std;
 
 class Sales_data
@@ -28,7 +29,16 @@ int main()
 {
     cout<<"copy control test"<<endl;
     
-
+    int n  = 9;
+    int i=0;
+    bitset<32> bs(n);
+    cout<<n<<" => "<<bs<<endl;
+    while(n)
+    {
+        i++;
+        n = n & (n-1);
+    }
+    cout<<i<<endl;
     return 0;
 }
 
