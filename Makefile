@@ -4,9 +4,6 @@ DFLAGS=
 LD_FLAGS= -lpthread
 INCLUDES=
 
-#LD_FLAGS=-L$(ACE_ROOT)/lib -lpthread -lACE
-#INCLUDES=-I$(ACE_ROOT)
-
 SOURCES=$(wildcard *.cpp)
 TARGETS=$(filter-out chapter_3, $(patsubst %.cpp, %,$(SOURCES)))
 
