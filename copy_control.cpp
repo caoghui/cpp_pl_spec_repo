@@ -23,12 +23,18 @@ Sales_data::Sales_data(const Sales_data& orig):bookNo(orig.bookNo),
 
 }
 
-void test();
-
 int main()
 {
     cout<<"copy control test"<<endl;
     
+    
+    return 0;
+}
+
+/*
+void test()
+{
+
     int n  = 9;
     int i=0;
     bitset<32> bs(n);
@@ -39,11 +45,6 @@ int main()
         n = n & (n-1);
     }
     cout<<i<<endl;
-    return 0;
-}
-
-void test()
-{
     unsigned char i = 0x80;
     printf("0x%x\n", ~i>>3+1);
 
@@ -55,3 +56,5 @@ void test()
     printf("%s\n", *cpp[-2]+3);
     printf("%s\n", cpp[-1][-1]+1);
 }
+
+*/
