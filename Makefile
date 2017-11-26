@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-Wall -std=gnu++0x -fPIC -g
+CFLAGS=-Wall -std=gnu++11 -fPIC -g
 DFLAGS=
 LD_FLAGS= -lpthread
 INCLUDES=
