@@ -1,5 +1,6 @@
 test
 copy_control
+basic_data_type
 chapter_*
 test.d*
 *.dSYM
