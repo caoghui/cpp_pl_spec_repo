@@ -1,17 +1,35 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
 
 //测试类型转换
 void test_convert();
+int fact(int val);
+int fact(const int val);
 
 int main(int argc, char* argv[])
 {
     cout<<"This is a basic data type test !"<<endl;
-    test_convert();
+    cout<<fact(5)<<endl;
+    return 0;
+    //test_convert();
+    string str;
+    while(getline(cin, str) && str != "quit")
+        cout<<"input : "<<str<<endl;
+
     return 0;
 }
 
+int fact(int val)
+{
+    int ret = 1;
+    while(val > 1)
+    {
+        ret *= val--;
+    }
+    return ret;
+}
 
 void test_convert()
 {
