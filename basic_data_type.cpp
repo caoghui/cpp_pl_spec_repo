@@ -1,10 +1,6 @@
 #include <iostream>
 #include <string>
-<<<<<<< HEAD
 #include <cctype>
-=======
->>>>>>> 83120a249b545ac524897f0d0a83c2454f6d017a
-
 using namespace std;
 
 //测试类型转换
