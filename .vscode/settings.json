@@ -1,6 +1,7 @@
 {
     "C_Cpp.intelliSenseEngineFallback": "Enabled",
     "files.associations": {
-        "bitset": "cpp"
+        "bitset": "cpp",
+        "sstream": "cpp"
     }
 }

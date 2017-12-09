@@ -1,11 +1,16 @@
 #include <iostream>
 #include <string>
+<<<<<<< HEAD
 #include <cctype>
+=======
+>>>>>>> 83120a249b545ac524897f0d0a83c2454f6d017a
 
 using namespace std;
 
 //测试类型转换
 void test_convert();
+int fact(int val);
+int fact(const int val);
 
 int main(int argc, char* argv[])
 {
@@ -31,11 +36,25 @@ int main(int argc, char* argv[])
             cout<<s<<endl;  
         }
     }
-    
+    cout<<fact(5)<<endl;
+    return 0;
+    //test_convert();
+    string str;
+    while(getline(cin, str) && str != "quit")
+        cout<<"input : "<<str<<endl;
 
     return 0;
 }
 
+int fact(int val)
+{
+    int ret = 1;
+    while(val > 1)
+    {
+        ret *= val--;
+    }
+    return ret;
+}
 
 void test_convert()
 {

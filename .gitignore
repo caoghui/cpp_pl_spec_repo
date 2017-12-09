@@ -1,4 +1,5 @@
 test
+*.exe
 copy_control
 basic_data_type
 chapter_*
