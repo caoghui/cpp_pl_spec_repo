@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <cctype>
 
 using namespace std;
 
@@ -8,7 +10,29 @@ void test_convert();
 int main(int argc, char* argv[])
 {
     cout<<"This is a basic data type test !"<<endl;
-    test_convert();
+    //test_convert();
+    string s;
+    //cin>>s;
+    while(getline(cin, s))
+    {
+        if(!s.empty())
+        {
+            for(decltype(s.size()) index = 0; index != s.size() &&  !isspace(s[index]); ++index)
+            {
+                s[index] = toupper(s[index]);
+            }
+            /*
+            for(auto &c : s)
+            {
+                cout<<c<<endl;
+                c = toupper(c);
+            }
+            */
+            cout<<s<<endl;  
+        }
+    }
+    
+
     return 0;
 }
 
