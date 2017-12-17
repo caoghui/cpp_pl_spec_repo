@@ -1,9 +1,13 @@
 #include <iostream>
 #include <string>
 #include "smart_assert.h"
+//#include "boost/smart_assert/assert.hpp"
+
+#include <boost/scope_exit.hpp>
 
 
 using namespace std;
+using namespace boost;
 
 void print_current_val(bool val, const char* expr)
 {
@@ -29,6 +33,10 @@ int main(int argc, char** argv)
 
     SMART_ASSERT(buf==nullptr)(buf);
 
+    BOOST_SCOPE_EXIT(buf)
+    {
+        { cout<<"exit"<<endl;}
+    }BOOST_SCOPE_EXIT_END
 
     return 0;
 }
