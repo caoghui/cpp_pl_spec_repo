@@ -1,5 +1,8 @@
 test
 *.exe
+test_assert
+lambda
+test_scope_guard
 copy_control
 basic_data_type
 chapter_*
