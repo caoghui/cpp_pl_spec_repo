@@ -125,8 +125,8 @@ int main(int argc, char** argv)
 	//test_vec();
 	//test_lst();
 	//test_alg();
-	//test_rwf();
-	test_map();
+	test_rwf();
+	//test_map();
     return 0;
 }
 

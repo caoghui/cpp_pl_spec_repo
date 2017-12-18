@@ -5,7 +5,7 @@ LD_FLAGS= -lpthread
 INCLUDES=
 
 SOURCES=$(wildcard *.cpp)
-TARGETS=$(filter-out chapter_3, $(patsubst %.cpp, %,$(SOURCES)))
+TARGETS=$(filter-out , $(patsubst %.cpp, %,$(SOURCES)))
 
 quiet-command = $(if $(v),$1,$(if $(2),@echo $2 && $1, @$1))
 
