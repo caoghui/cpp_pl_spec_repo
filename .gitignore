@@ -1,5 +1,6 @@
 test
 *.exe
+build/
 test_assert
 lambda
 test_scope_guard
