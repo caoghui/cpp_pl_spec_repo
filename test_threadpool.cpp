@@ -71,16 +71,17 @@ void test_threadpool_v0()
 	for (int i = 0; i < 8; ++i)
 	{
 		results.emplace_back(
-			pool.commit([i] {
-			//cout << "[" << this_thread::get_id() << "] => hello world : " << i << endl;
-			ThreadPool::print(i, true);
-			this_thread::sleep_for(std::chrono::seconds(2));
-			//cout << "workd " << i << endl;
-			return i*i;
-		})
+			pool.commit(
+				[i] 
+				{
+					ThreadPool::print(i, true);
+					this_thread::sleep_for(std::chrono::seconds(2));
+					return i*i;
+				})
 		);
 	}
 	this_thread::sleep_for(std::chrono::seconds(15));
+
 	pool.stop();
 	cout << "==============commit all=============" << this_thread::get_id() << endl;
 
