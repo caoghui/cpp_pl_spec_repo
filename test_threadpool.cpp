@@ -41,9 +41,19 @@ public:
 	}
 };
 
+bool is_r_value(int&&)
+{
+	return true;
+}
+bool is_r_value(const int&)
+{
+	return false;
+}
+
 void test_threadpool_v0();
 void test_threadpool_v1();
 void test_threadpool_v2();
+void tets_rvalue();
 
 int main(int argc, char** argv)
 {
@@ -58,6 +68,16 @@ int main(int argc, char** argv)
 		cout << "some unhappy happened..." << e.what() << endl;
 	}
     return 0;
+}
+
+void tets_rvalue()
+{
+	int a = 1;
+	int&& i = 2;
+	if (is_r_value(i))
+	{
+		cout << "i is r value" << endl;
+	}
 }
 
 void test_threadpool_v0()
