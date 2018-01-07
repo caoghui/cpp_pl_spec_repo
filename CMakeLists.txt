@@ -24,8 +24,14 @@ endif()
 message(STATUS "in top dir : CMAKE_CXX_FLAGS => ${CMAKE_CXX_FLAGS}")
 
 #include directory
-include_directories(/usr/local/include)
+include_directories(/usr/local/include )
 link_directories(/usr/local/lib)
+
+if(APPLE)
+    include_directories(/Users/caoguanghui/Workspace/ACE_wrappers)
+    link_directories(/Users/caoguanghui/Workspace/ACE_wrappers/lib)
+endif()
+
 #collect source files
 #file(GLOB_RECURSE SRC_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.cpp")
 
