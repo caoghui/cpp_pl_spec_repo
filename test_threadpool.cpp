@@ -53,13 +53,14 @@ bool is_r_value(const int&)
 void test_threadpool_v0();
 void test_threadpool_v1();
 void test_threadpool_v2();
-void tets_rvalue();
+void test_rvalue();
 
 int main(int argc, char** argv)
 {
 	try
 	{
-		test_threadpool_v0();
+		test_rvalue();
+		//test_threadpool_v0();
 		//test_threadpool_v1();
 		//test_threadpool_v2();
 	}
@@ -70,13 +71,17 @@ int main(int argc, char** argv)
     return 0;
 }
 
-void tets_rvalue()
+void test_rvalue()
 {
 	int a = 1;
 	int&& i = 2;
-	if (is_r_value(i))
+	if (is_r_value(move<int&>(i)))
 	{
 		cout << "i is r value" << endl;
+	}
+	else
+	{
+		cout << "i is not r value" << endl;
 	}
 }
 
