@@ -2,6 +2,7 @@
 #include <chrono>
 #include <string>
 #include <vector>
+#include <thread>
 #include <iostream>
 #include "ThreadPool.h"
 #include "ThreadPool_v2.h"

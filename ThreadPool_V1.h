@@ -20,7 +20,7 @@ template<class T>
 void print(T& t)
 {
 	std::lock_guard<std::mutex> lock{ g_mutex };
-	std::cout << " [" << this_thread::get_id << " ] : " << t;
+	std::cout << " [" << std::this_thread::get_id << " ] : " << t;
 }
 
 namespace ThreadPoolV1

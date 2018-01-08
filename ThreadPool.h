@@ -6,6 +6,7 @@
 #include <queue>
 #include <thread>
 #include <atomic>
+#include <iostream>
 #include <condition_variable>
 #include <future>
 #include <functional>
@@ -18,8 +19,8 @@ namespace ThreadPool
 
 #define MAX_THREAD_NUM 256
 	/*
-	Ïß³Ì³Ø£¬¿ÉÒÔÌá½»±ä²Îº¯Êý»òlambdaµÄÄäÃûº¯ÊýÖ´ÐÐ£¬¿ÉÒÔ»ñÈ¡Ö´ÐÐ·µ»ØÖµ
-	²»Ö§³ÖÀà³ÉÔ±º¯Êý£¬Ö§³ÖÀà¾²Ì¬³ÉÔ±º¯Êý»òÈ«¾Öº¯Êý
+	ï¿½ß³Ì³Ø£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á½»ï¿½ï¿½Îºï¿½ï¿½ï¿½ï¿½ï¿½lambdaï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½Ð£ï¿½ï¿½ï¿½ï¿½Ô»ï¿½È¡Ö´ï¿½Ð·ï¿½ï¿½ï¿½Öµ
+	ï¿½ï¿½Ö§ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½ï¿½à¾²Ì¬ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½Öºï¿½ï¿½ï¿½
 	*/
 
 	std::mutex g_mutex;
@@ -27,25 +28,25 @@ namespace ThreadPool
 	void print(T& t, bool e = false)
 	{
 		std::lock_guard<std::mutex> lock{ g_mutex };
-		std::cout << " [" << this_thread::get_id() << " ] : " << t;
-		if (e) std::cout << endl;
+		std::cout << " [" << std::this_thread::get_id() << " ] : " << t;
+		if (e) std::cout << std::endl;
 	}
 	class ThreadPool
 	{
 		using Task = std::function<void()>;
-		//Ïß³Ì³Ø
+		//ï¿½ß³Ì³ï¿½
 		std::vector<std::thread> _pool;
-		//ÈÎÎñ¶ÓÁÐ
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		std::queue<Task> _tasks;
-		//Í¬²½£º»¥³âËø
+		//Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		std::mutex _mutex;
 		std::condition_variable _cond;
-		//ÊÇ·ñ¹Ø±ÕÌá½»
+		//ï¿½Ç·ï¿½Ø±ï¿½ï¿½á½»
 		std::atomic<bool> _stoped;
-		//¿ÕÏÐÏß³ÌÊýÁ¿
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½ï¿½ï¿½ï¿½ï¿½
 		std::atomic<int> _idlnum;
 
-		//ÈÎÎñµ÷¶È
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	public:
 		inline ThreadPool(unsigned short size = 4) : _stoped{ false }
@@ -56,13 +57,13 @@ namespace ThreadPool
 				_pool.emplace_back(
 					[this] 
 					{
-						//¹¤×÷Ïß³Ì
+						//ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½
 						while(!this->_stoped)
 						{
 							std::function<void()> task;
 							{
-								//»ñÈ¡Ò»¸ö´ýÖ´ÐÐµÄtask
-								std::unique_lock<std::mutex> lock{this->_mutex}; //unique_lockµÄºÃ´¦£º¿ÉÒÔËæÊ±unlock() lock()
+								//ï¿½ï¿½È¡Ò»ï¿½ï¿½ï¿½ï¿½Ö´ï¿½Ðµï¿½task
+								std::unique_lock<std::mutex> lock{this->_mutex}; //unique_lockï¿½ÄºÃ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±unlock() lock()
 								print(" running....\n");
 								this->_cond.wait(lock, [this] {return this->_stoped.load() || !this->_tasks.empty(); });
 								if (this->_stoped && this->_tasks.empty())
@@ -86,12 +87,12 @@ namespace ThreadPool
 		inline ~ThreadPool()
 		{
 			_stoped.store(true);
-			_cond.notify_all(); //»½ÐÑËùÓÐÏß³ÌÖ´ÐÐ
+			_cond.notify_all(); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½Ö´ï¿½ï¿½
 			for (auto& thd : _pool)
 			{
-				//method 1      //ÈÃÏß³Ì×ÔÉú×ÔÃð
+				//method 1      //ï¿½ï¿½ï¿½ß³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				//thd.detach(); 
-				//method 2      //µÈ´ýÈÎÎñ½áÊø
+				//method 2      //ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				if (thd.joinable())
 				{
 					thd.join();
@@ -100,29 +101,29 @@ namespace ThreadPool
 		}
 	public:
 		/*
-		Ìá½»Ò»¸öÈÎÎñ
-		µ÷ÓÃget()»ñÈ¡·µ»ØÖµ»áµÈ´ýÈÎÎñÖ´ÐÐÍê£¬»ñÈ¡·µ»ØÖµ
-		ÓÐÁ½ÖÖ·½·¨¿ÉÒÔÊµÏÖµ÷ÓÃÀà³ÉÔ±
-		1 Ê¹ÓÃbind   :  .commit(std::bind(&Dog::say_hello, &dog));
-		2 Ê¹ÓÃmem_fn :  .commit(std::mem_fn(&Dog::say_hello), &dog);
+		ï¿½á½»Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		ï¿½ï¿½ï¿½ï¿½get()ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ê£¬ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Öµ
+		ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±
+		1 Ê¹ï¿½ï¿½bind   :  .commit(std::bind(&Dog::say_hello, &dog));
+		2 Ê¹ï¿½ï¿½mem_fn :  .commit(std::mem_fn(&Dog::say_hello), &dog);
 		*/
 		template<class F, class... Args>
 		auto commit(F&& f, Args... args) -> std::future<decltype(f(args...))>
 		{
 			if (_stoped.load())
 				throw std::runtime_error("commit on ThreadPool is topped.");
-			using RetType = decltype(f(args...)); //typename std::result_of<F(Args...)>::type;  º¯ÊýfµÄ·µ»ØÖµÀàÐÍ
+			using RetType = decltype(f(args...)); //typename std::result_of<F(Args...)>::type;  ï¿½ï¿½ï¿½ï¿½fï¿½Ä·ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½
 			auto task = std::make_shared<std::packaged_task<RetType()>>(std::bind(std::forward<F>(f), std::forward<Args>(args)...));
 			std::future<RetType> future = task->get_future();
 			{
-				//Ìí¼ÓÈÎÎñµ½¶ÓÁÐ
-				std::lock_guard<std::mutex> lock{_mutex}; //¶Ôµ±Ç°¿éµÄÓï¾ä¼ÓËø
+				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñµ½¶ï¿½ï¿½ï¿½
+				std::lock_guard<std::mutex> lock{_mutex}; //ï¿½Ôµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				_tasks.emplace([task]() { (*task)(); });
 			}
-			_cond.notify_one(); //»½ÐÑÒ»¸öÏß³Ì
+			_cond.notify_one(); //ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ß³ï¿½
 			return future;
 		}
-		//¿ÕÏÐÏß³ÌÊýÁ¿
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½ï¿½ï¿½ï¿½ï¿½
 		int  idle() { return _idlnum; }
 		void stop() { _stoped.store(true); }
 	};

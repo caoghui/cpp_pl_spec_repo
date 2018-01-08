@@ -2,6 +2,32 @@
     "C_Cpp.intelliSenseEngineFallback": "Enabled",
     "files.associations": {
         "bitset": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "limits": "cpp",
+        "iterator": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "vector": "cpp",
+        "__config": "cpp",
+        "__nullptr": "cpp",
+        "exception": "cpp",
+        "initializer_list": "cpp",
+        "new": "cpp",
+        "stdexcept": "cpp",
+        "typeinfo": "cpp",
+        "algorithm": "cpp",
+        "iosfwd": "cpp",
+        "iostream": "cpp",
+        "__bit_reference": "cpp",
+        "__hash_table": "cpp",
+        "__split_buffer": "cpp",
+        "__tree": "cpp",
+        "deque": "cpp",
+        "hash_map": "cpp",
+        "list": "cpp",
+        "map": "cpp",
+        "memory": "cpp",
+        "thread": "cpp",
+        "unordered_map": "cpp"
     }
 }
