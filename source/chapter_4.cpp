@@ -9,8 +9,8 @@
 #include <iostream>
 #include <vector>
 #include <typeinfo>
-#include <ace/OS.h>
-#include <ace/Log_Msg.h>
+//#include <ace/OS.h>
+//#include <ace/Log_Msg.h>
 using namespace std;
 
 

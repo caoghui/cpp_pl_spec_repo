@@ -26,7 +26,10 @@ message(STATUS "in top dir : CMAKE_CXX_FLAGS => ${CMAKE_CXX_FLAGS}")
 #include directory
 include_directories(include)
 
-if(APPLE)
+if(WIN32)
+    include_directories(E:\\back\\repo\\boost_1_65_1\\)
+    link_directories(E:\\back\\repo\\boost_1_65_1\\libs\\)
+elseif(APPLE)
     include_directories(/usr/local/include )
     link_directories(/usr/local/lib)
     include_directories(/Users/caoguanghui/Workspace/ACE_wrappers)

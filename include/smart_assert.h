@@ -44,9 +44,9 @@ public:
 Assert make_assert(const char* expr);
 
 /*
-å¦‚ä½•ç†è§£è¿™ä¸ªæŠ€å·§ï¼šå½“é¢„å¤„ç†å™¨çœ‹åˆ°SMART_ASSERT_A(æˆ–_B)åŽé¢è·Ÿç€ä¸€å¯¹æ‹¬å·æ—¶ï¼Œå®ƒå°±å°†
-è¿™ä¸ªå½“æˆå¯¹å®çš„è°ƒç”¨æ¥å¯¹å¾…ã€‚å¦‚æžœæ²¡æœ‰æ‹¬å·ï¼Œé¢„å¤„ç†å™¨å°±ç®€å•åœ°å°†è¿™ä¸ªç¬¦å·ä»ç„¶ç•™åœ¨é‚£é‡Œã€‚è€Œ
-åœ¨åŽä¸€ç§æƒ…å†µä¸‹ï¼Œç¬¦å·SMART_ASSERT_A(æˆ–_B)åªæ˜¯ä»£è¡¨æˆå‘˜å˜é‡ã€‚
+ÈçºÎÀí½âÕâ¸ö¼¼ÇÉ£ºµ±Ô¤´¦ÀíÆ÷¿´µ½SMART_ASSERT_A(»ò_B)ºóÃæ¸ú×ÅÒ»¶ÔÀ¨ºÅÊ±£¬Ëü¾Í½«
+Õâ¸öµ±³É¶ÔºêµÄµ÷ÓÃÀ´¶Ô´ý¡£Èç¹ûÃ»ÓÐÀ¨ºÅ£¬Ô¤´¦ÀíÆ÷¾Í¼òµ¥µØ½«Õâ¸ö·ûºÅÈÔÈ»ÁôÔÚÄÇÀï¡£¶ø
+ÔÚºóÒ»ÖÖÇé¿öÏÂ£¬·ûºÅSMART_ASSERT_A(»ò_B)Ö»ÊÇ´ú±í³ÉÔ±±äÁ¿¡£
 */
 #define SMART_ASSERT_OP(x, next)\
     SMART_ASSERT_A.print_current_val(#x, (x)).SMART_ASSERT_##next
