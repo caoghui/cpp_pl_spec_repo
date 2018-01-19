@@ -1,4 +1,5 @@
 test
+.vscode/
 *.exe
 build/
 test_assert
