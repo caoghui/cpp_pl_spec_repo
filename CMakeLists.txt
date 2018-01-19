@@ -24,10 +24,11 @@ endif()
 message(STATUS "in top dir : CMAKE_CXX_FLAGS => ${CMAKE_CXX_FLAGS}")
 
 #include directory
-include_directories(/usr/local/include )
-link_directories(/usr/local/lib)
+include_directories(include)
 
 if(APPLE)
+    include_directories(/usr/local/include )
+    link_directories(/usr/local/lib)
     include_directories(/Users/caoguanghui/Workspace/ACE_wrappers)
     link_directories(/Users/caoguanghui/Workspace/ACE_wrappers/lib)
 endif()
@@ -35,7 +36,7 @@ endif()
 #collect source files
 #file(GLOB_RECURSE SRC_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.cpp")
 
-file(GLOB SRC_FILES "*.cpp")
+file(GLOB SRC_FILES "source/*.cpp")
 #message(STATUS "in top dir : source files => ${SRC_FILES}")
 
 foreach(FILE ${SRC_FILES})
