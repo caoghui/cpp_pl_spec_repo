@@ -9,6 +9,7 @@
 #include <iostream>
 #include <vector>
 #include <typeinfo>
+#include <string>
 //#include <ace/OS.h>
 //#include <ace/Log_Msg.h>
 using namespace std;
@@ -18,13 +19,21 @@ void test_value();
 void test_limits();
 void test_auto();
 
+struct Sales_data
+{
+	string isdn() const { return _bookNo; }
+	string _bookNo;
+};
+
 int main(int argc, char** argv)
 {
     cout<<"chapter 04 test case"<<endl;
+	const Sales_data s;
+	s.isdn();
     //test_limits();
     //test_value();
     //ACE_TRACE(ACE_TEXT ("main"));
-	test_auto();
+	//test_auto();
     return 0;
 }
 
