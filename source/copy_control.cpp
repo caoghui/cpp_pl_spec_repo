@@ -90,7 +90,6 @@ Sales_data& Sales_data::combine(const Sales_data& rhs)
 }
 
 
-
 //非成员接口函数
 Sales_data add(const Sales_data& lhs, const Sales_data& rhs)
 {
