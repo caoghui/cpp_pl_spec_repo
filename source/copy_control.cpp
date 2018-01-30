@@ -3,6 +3,9 @@
 #include <cstdio>
 #include <string>
 #include <bitset>
+
+#include <fstream>
+
 using namespace std;
 
 struct NoCopy
