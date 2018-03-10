@@ -57,9 +57,10 @@ ostream& operator<<(ostream&, complex);
 //主函数
 int main(int argc, char** argv)
 {
-	complex b = 3;
-	
-	cout<<b<<endl;
+	//complex b = 3;
+	string str("1.2912323");
+	cout << stod(str) << endl;
+	//cout<<b<<endl;
 	return 0;
 }
 
