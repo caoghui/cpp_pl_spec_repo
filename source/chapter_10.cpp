@@ -5,8 +5,10 @@
 	> Created Time: 2017年03月28日 星期二 14时14分01秒
  ************************************************************************/
 
+#include <string>
 #include <iostream>
 #include <ostream>
+#include <sstream>
 
 using namespace std;
 
@@ -137,27 +139,23 @@ class lbuffer
 {
 	string buf;
 public:
-	lbuffer() { cin>>buf; }
+	lbuffer() { cin >> buf; }
 };
 
+void PrettyFormat(int i, string& s)
+{
+	ostringstream temp;
+	
+	temp << i;
+	s = temp.str();
+}
 
 int main(int argc, char** argv)
 {
-    cout<<"test chapter 10 case"<<endl;
-    
-    //cout<<true<<" ; "<<false<<endl;
-    //cout<<boolalpha;
-    //cout<<true<<" ; "<<false<<endl;  
-    
-    int * p = new int();
-    cout<<"local : "<<&p<<"; free : "<<p<<endl;
-    
-    //test case 1
-    //Date d;
-    //f(d);
-    
-    //test case 2
-    //lbuffer words[5];
+	int i = 30;
+	string s;
+	PrettyFormat(i, s);
+	cout << s << endl;
     
     return 0;
 }

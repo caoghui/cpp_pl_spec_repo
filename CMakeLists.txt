@@ -28,7 +28,7 @@ include_directories(include)
 
 if(WIN32)
     include_directories(E:\\back\\repo\\boost_1_65_1\\)
-    link_directories(E:\\back\\repo\\boost_1_65_1\\libs\\)
+    link_directories(E:\\back\\repo\\boost_1_65_1\\stage\\lib\\)
 elseif(APPLE)
     include_directories(/usr/local/include )
     link_directories(/usr/local/lib)
