@@ -29,6 +29,8 @@ struct gfun {
 
 class A
 {
+private:
+	thread m_thd;
 public:
 	static int Afun(int n = 0)
 	{
@@ -39,6 +41,22 @@ public:
 	{
 		cout << this_thread::get_id() << " hello Bfun! " << str << endl;
 		return str;
+	}
+
+	void run()
+	{
+		cout << this_thread::get_id() << "A::run running...." << endl;
+	}
+
+	void start()
+	{
+		m_thd = thread(&A::run, this);
+	}
+
+	void stop()
+	{
+		if (m_thd.joinable())
+			m_thd.join();
 	}
 };
 
@@ -60,10 +78,14 @@ int main(int argc, char** argv)
 {
 	try
 	{
-		test_rvalue();
+		//test_rvalue();
 		//test_threadpool_v0();
 		//test_threadpool_v1();
 		//test_threadpool_v2();
+		A a;
+		a.start();
+		a.stop();
+		
 	}
 	catch (std::exception& e)
 	{
