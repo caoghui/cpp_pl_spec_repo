@@ -9,76 +9,154 @@
 #include <iostream>
 #include <vector>
 #include <typeinfo>
+#include <sstream>
 #include <string>
-//#include <ace/OS.h>
-//#include <ace/Log_Msg.h>
+#include <cassert>
+#include <functional>
+#include <algorithm>
+#include <boost/variant.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/lambda/lambda.hpp>
+#include <boost/fusion/include/for_each.hpp>
+#include <boost/fusion/adapted/std_pair.hpp>
+#include <boost/fusion/adapted/boost_tuple.hpp>
+
+
 using namespace std;
+using namespace boost;
+using namespace boost::lambda;
 
+void test_vector();
+void test_streambuf();
+void test_cast(int argc, char** argv);
+void test_stringize();
 
-void test_value();
-void test_limits();
-void test_auto();
-
-class Sales_data
+struct stringize_functor
 {
-	//为Sales_data的非成员函数所做的友元声明
-	friend Sales_data add(const Sales_data&, const Sales_data&);
-	friend istream& read(istream&, Sales_data&);
-	friend ostream& print(ostream&, const Sales_data&);
-
-public:
-	Sales_data() = default;
-	Sales_data(const string& s, unsigned n, double p): bookNo(s), units_sold(n), revenue(p * n) {}
-	Sales_data(const string& s) : bookNo(s) {}
-	Sales_data(istream&);
-
-	string isdn() const { return bookNo; }
-	Sales_data& combine(const Sales_data&);
-	
 private:
-	double avg_price() const
+	string& result;
+public:
+	explicit stringize_functor(string& res): result(res)
 	{
-		return units_sold ? revenue / units_sold : 0;
 	}
-	string bookNo;
-	unsigned units_sold = 0;
-	double revenue = 0.0;
+	template<class T>
+	void operator()(const T& v) const
+	{
+		result += boost::lexical_cast<string>(v);
+	}
 };
 
-Sales_data add(const Sales_data&, const Sales_data&);
-ostream& print(ostream&, const Sales_data&);
-istream& read(istream&, Sales_data&);
+template<class Sequence>
+string stringize(const Sequence& seq)
+{
+	string result;
+	boost::fusion::for_each(seq, stringize_functor(result));
+	return result;
+}
+
+//converting to string without dynamic memory allocation
+void number_to_file(int number, FILE* file);
+//converting part of the string
+int convert_strings_part(const string& s, size_t pos, size_t n);
+
+struct to_long_double_functor : boost::static_visitor<long double>
+{
+	template<class T>
+	long double operator()(const T& v) const
+	{
+		return boost::lexical_cast<long double>(v);
+	}
+};
+
+template<class Variant>
+long double to_long_double(const Variant& v)
+{
+	return boost::apply_visitor(to_long_double_functor(), v);
+}
+
+void test_todouble()
+{
+	boost::variant<char, int, string> v1('0'), v2("10.0001"), v3(1);
+	const long double sum = to_long_double(v1) + to_long_double(v2) + to_long_double(v3);
+	const int ret = (sum > 11 && sum < 11.1 ? 0 : 1);
+	assert(ret == 0);
+	cout << sum << endl;
+}
 
 int main(int argc, char** argv)
-{
-    cout<<"chapter 04 test case"<<endl;
-	const Sales_data s;
-	s.isdn();
-    //test_limits();
-    //test_value();
-    //ACE_TRACE(ACE_TEXT ("main"));
-	//test_auto();
+{	
+	//test_vector();
+	//test_streambuf();
+	//test_cast(argc, argv);
+	//test_stringize();
+	test_todouble();
+
     return 0;
 }
 
-void test_auto()
+void test_stringize()
+{
+	boost::tuple<char, int, char, int> decim('-', 10, 'e', 5);
+	assert(stringize(decim) == "-10e5");
+	cout << stringize(decim) << endl;
+
+	pair<short, string> value_and_type(270, "Kelvin");
+	assert(stringize(value_and_type) == "270Kelvin");
+	cout << stringize(value_and_type) << endl;
+}
+
+void number_to_file(int number, FILE* file)
+{
+	//convert some number and put it to file
+	typedef boost::array<char, 50> buf_t;
+	buf_t buffer = boost::lexical_cast<buf_t>(number);
+	std::fputs(buffer.begin(), file);
+}
+
+//take part of the string and converts it to int
+int convert_strings_part(const string& s, size_t pos, size_t n)
+{
+	return boost::lexical_cast<int>(s.data() + pos, n);
+}
+
+void test_cast(int argc, char** argv)
+{
+	using boost::lexical_cast;
+	using boost::bad_lexical_cast;
+	vector<short> args;
+	while (*++argv)
+	{
+		try
+		{
+			args.push_back(lexical_cast<short>(*argv));
+		}
+		catch (const bad_lexical_cast& )
+		{
+			args.push_back(0);
+		}
+	}
+	for_each(args.begin(), args.end(), cout << _1 << " ");
+	cout << endl;
+}
+
+void test_vector()
 {
 	vector<int> ivec{1,2,3,4,5};
-	auto len = ivec.size();
-	cout << "auto len = " << typeid(len).name() <<endl;
 
+	for_each(ivec.begin(), ivec.end(), cout << _1 << " ");
+	cout << endl;
+	for_each(ivec.begin(), ivec.end(), cout << _1 * 2 << " ");
+	cout << endl;
 }
 
-void test_limits()
+void test_streambuf()
 {
-	cout<<"largest float == "<<numeric_limits<float>::max()<<" , char is signed == "<<numeric_limits<char>::is_signed<<endl;
-}
+	stringstream is("ax2");
+	istreambuf_iterator<char> b2(is);
+	istreambuf_iterator<char> e2;
 
-void test_value()
-{
-	char ch;
-	cin>>ch;
-	cout<<"the value of "<<ch<<" is : "<<int(ch)<<endl;
-	cout<<"the value \'a\'+1 : "<<('a' + 1)<<endl;
-	cout<<"sizeof(int) : "<<sizeof(int)<<endl;
+	istreambuf_iterator<char> i = find_if(b2, e2, _1 == 'x');
+	cout << *i << endl;
+	cout << distance(i, e2) << endl;
+
 }
