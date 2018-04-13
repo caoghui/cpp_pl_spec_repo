@@ -28,13 +28,17 @@ include_directories(include)
 
 if(WIN32)
     include_directories(E:\\back\\repo\\boost_1_65_1\\)
+	include_directories(E:\\back\\repo\\ACE_wrappers\\)	
     link_directories(E:\\back\\repo\\boost_1_65_1\\stage\\lib\\)
+	link_directories(E:\\back\\repo\\ACE_wrappers\\lib\\)
 elseif(APPLE)
     include_directories(/usr/local/include )
     link_directories(/usr/local/lib)
     include_directories(/Users/caoguanghui/Workspace/ACE_wrappers)
     link_directories(/Users/caoguanghui/Workspace/ACE_wrappers/lib)
 endif()
+
+set(CMAKE_EXE_LINKER_FLAGS_DEBUG   "${CMAKE_EXE_LINKER_FLAGS_DEBUG}   /DYNAMICBASE \"ACEd.lib\" /LIBPATH:${LIB_DEBUG}")
 
 #collect source files
 #file(GLOB_RECURSE SRC_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.cpp")
