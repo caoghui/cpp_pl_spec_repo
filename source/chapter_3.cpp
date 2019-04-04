@@ -5,6 +5,11 @@
 	> Created Time: 2017年03月27日 星期一 13时58分59秒
  ************************************************************************/
 
+#include <windows.h>
+#include <ppl.h>
+#include <concurrent_vector.h>
+#include <array>
+#include <tuple>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -18,6 +23,24 @@
 #include "util.h"
 
 using namespace std;
+using namespace concurrency;
+
+//calls the provided work function and returns the number of milliseconds that it takes to call that function
+template<class Function>
+__int64 time_call(Function&& f)
+{
+	__int64 begin = GetTickCount();
+	f();
+	return GetTickCount() - begin;
+}
+
+int fibonacci(int n)
+{
+	if (n < 2)
+		return n;
+	return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
 
 class Entry
 {
@@ -114,6 +137,7 @@ void test_lst();
 void test_vec();
 void test_int();
 void test_str();
+void test_ppl();
 //end
 
 int main(int argc, char** argv)
@@ -127,7 +151,44 @@ int main(int argc, char** argv)
 	//test_alg();
 	//test_rwf();
 	//test_map();
+	test_ppl();
     return 0;
+}
+
+
+void test_ppl()
+{
+	__int64 elapsed;
+	array<int, 4> a = {24, 26, 41, 42};
+	//the results of the serial computation
+	vector<tuple<int, int>> results1;
+	//the results of the parallel computation
+	concurrent_vector<tuple<int, int>> results2;
+
+	//use the for_each algorithm to compute the results serially
+	elapsed = time_call([&] {
+		for_each(begin(a), end(a), [&](int n) {
+			results1.push_back(make_tuple(n, fibonacci(n)));
+		});
+	});
+	cout << "serial time : " << elapsed << " ms" << endl;
+
+	elapsed = time_call([&] {
+		parallel_for_each(begin(a), end(a), [&](int n) {
+			results2.push_back(make_tuple(n, fibonacci(n)));
+		});
+		//because parallel_for_each acts concurrently, the results do not have a pre-determined order
+		//sort the concurrent_vector object so that the results match the serial version
+		sort(begin(results2), end(results2));
+	});
+
+	cout << "parallel time : " << elapsed << " ms" << endl;
+
+	//print the results
+	for_each(begin(results2), end(results2), [](tuple<int, int>& pair) {
+		cout << "fib(" << get<0>(pair) << "): " << get<1>(pair) << endl;
+	});
+
 }
 
 map<string, int> histogram;
